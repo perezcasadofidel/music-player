@@ -18,7 +18,6 @@ export interface Playlist {
   createdAt: string;
 }
 
-
 export const mockSongs: Song[] = [
   {
     id: '1',
@@ -26,8 +25,8 @@ export const mockSongs: Song[] = [
     artist: 'C418',
     album: 'Minecraft - Volume Alpha',
     duration: 254,
-    coverUrl: '../../../public/images/Minecraft.jpg',
-    audioUrl: '../../../public/music/Minecraft.mp3',
+    coverUrl: '/images/Minecraft.jpg',
+    audioUrl: '/music/Minecraft.mp3',
     genre: 'Electronic'
   },
   {
@@ -36,8 +35,8 @@ export const mockSongs: Song[] = [
     artist: 'C418',
     album: 'Minecraft - Volume Alpha',
     duration: 186,
-    coverUrl: '../../../public/images/Minecraft.jpg',
-    audioUrl: '../../../public/music/Cat.mp3',
+    coverUrl: '/images/Minecraft.jpg',
+    audioUrl: '/music/Cat.mp3',
     genre: 'Electronic'
   },
   {
@@ -46,8 +45,8 @@ export const mockSongs: Song[] = [
     artist: 'C418',
     album: 'Minecraft - Volume Alpha',
     duration: 145,
-    coverUrl: '../../../public/images/Minecraft.jpg',
-    audioUrl: '../../../public/music/Dog.mp3',
+    coverUrl: '/images/Minecraft.jpg',
+    audioUrl: '/music/Dog.mp3',
     genre: 'Electronic'
   },
   {
@@ -56,8 +55,8 @@ export const mockSongs: Song[] = [
     artist: 'C418',
     album: 'Minecraft - Volume Beta',
     duration: 276,
-    coverUrl: '../../../public/images/Minecraft2.jpg',
-    audioUrl: '../../../public/music/Intro.mp3',
+    coverUrl: '/images/Minecraft2.jpg',
+    audioUrl: '/music/Intro.mp3',
     genre: 'R&B'
   },
   {
@@ -66,8 +65,8 @@ export const mockSongs: Song[] = [
     artist: 'C418',
     album: 'Minecraft - Volume Beta',
     duration: 185,
-    coverUrl: '../../../public/images/Minecraft2.jpg',
-    audioUrl: '../../../public/music/Mutation.mp3',
+    coverUrl: '/images/Minecraft2.jpg',
+    audioUrl: '/music/Mutation.mp3',
     genre: 'Ambient'
   },
   {
@@ -76,8 +75,8 @@ export const mockSongs: Song[] = [
     artist: 'PVRIS & MIYAVI',
     album: 'Arcane',
     duration: 161,
-    coverUrl: '../../../public/images/Arcane.jpg',
-    audioUrl: '../../../public/music/Snakes.mp3',
+    coverUrl: '/images/Arcane.jpg',
+    audioUrl: '/music/Snakes.mp3',
     genre: 'Rock'
   },
   {
@@ -86,8 +85,8 @@ export const mockSongs: Song[] = [
     artist: 'Denzel Curry, GIZZLE, Bren Joy',
     album: 'Arcane',
     duration: 201,
-    coverUrl: '../../../public/images/Arcane.jpg',
-    audioUrl: '../../../public/music/Dynasties and Dystopia.mp3',
+    coverUrl: '/images/Arcane.jpg',
+    audioUrl: '/music/Dynasties and Dystopia.mp3',
     genre: 'Indie'
   },
   {
@@ -96,8 +95,8 @@ export const mockSongs: Song[] = [
     artist: 'Michael Hunter',
     album: 'Grand Theft Auto: San Andrea',
     duration: 88,
-    coverUrl: '../../../public/images/San Andrea.jpg',
-    audioUrl: '../../../public/music/Theme From San Andreas.mp3',
+    coverUrl: '/images/San Andrea.jpg',
+    audioUrl: '/music/Theme From San Andreas.mp3',
     genre: 'Jazz'
   },
   {
@@ -106,8 +105,8 @@ export const mockSongs: Song[] = [
     artist: 'Brad Breeck',
     album: 'Gravity Falls',
     duration: 40,
-    coverUrl: '../../../public/images/Gravity Falls.png',
-    audioUrl: '../../../public/music/Opening Theme.mp3',
+    coverUrl: '/images/Gravity Falls.png',
+    audioUrl: '/music/Opening Theme.mp3',
     genre: 'Electronic'
   },
   {
@@ -116,8 +115,8 @@ export const mockSongs: Song[] = [
     artist: 'Rat Boy',
     album: 'Cyberpunk',
     duration: 117,
-    coverUrl: '../../../public/images/Cyberpunk.jpg',
-    audioUrl: '../../../public/music/Whos Ready for Tomorrow.mp3',
+    coverUrl: '/images/Cyberpunk.jpg',
+    audioUrl: '/music/Whos Ready for Tomorrow.mp3',
     genre: 'Folk'
   },
   {
@@ -126,8 +125,8 @@ export const mockSongs: Song[] = [
     artist: 'Major Crimes',
     album: 'Cyberpunk',
     duration: 214,
-    coverUrl: '../../../public/images/Cyberpunk.jpg',
-    audioUrl: '../../../public/music/Health.mp3',
+    coverUrl: '/images/Cyberpunk.jpg',
+    audioUrl: '/music/Health.mp3',
     genre: 'Electronic'
   },
   {
@@ -136,8 +135,8 @@ export const mockSongs: Song[] = [
     artist: 'Antigama',
     album: 'Cyberpunk',
     duration: 141,
-    coverUrl: '../../../public/images/Cyberpunk.jpg',
-    audioUrl: '../../../public/music/Kevin.mp3',
+    coverUrl: '/images/Cyberpunk.jpg',
+    audioUrl: '/music/Kevin.mp3',
     genre: 'Ambient'
   }
 ];
