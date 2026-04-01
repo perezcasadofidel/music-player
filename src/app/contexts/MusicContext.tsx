@@ -204,10 +204,12 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       }
     }
     
-    // Play audio
+    // Play audio with streaming
     if (audioRef.current) {
+      // Don't force load() - let browser stream progressively
       audioRef.current.src = song.audioUrl;
-      audioRef.current.load();
+      audioRef.current.currentTime = 0;
+      // Play starts buffering as data arrives
       audioRef.current.play().catch(err => console.error('Play error:', err));
     }
   }, [queue]);
@@ -259,7 +261,7 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     
     if (audioRef.current) {
       audioRef.current.src = nextSong.audioUrl;
-      audioRef.current.load();
+      audioRef.current.currentTime = 0;
       audioRef.current.play().catch(err => console.error('Play error:', err));
     }
   }, [queue, currentQueueIndex, isShuffle]);
@@ -292,17 +294,41 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     
     if (audioRef.current) {
       audioRef.current.src = prevSong.audioUrl;
-      audioRef.current.load();
+      audioRef.current.currentTime = 0;
       audioRef.current.play().catch(err => console.error('Play error:', err));
     }
   }, [queue, currentQueueIndex, currentTime, isShuffle]);
   
   const seekTo = useCallback((time: number) => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = time;
-      setCurrentTime(time);
+    if (!audioRef.current) return;
+    
+    const audio = audioRef.current;
+    
+    // Verifica si la posición está descargada
+    const buffered = audio.buffered;
+    let isTimeBuffered = false;
+    
+    for (let i = 0; i < buffered.length; i++) {
+      if (time >= buffered.start(i) && time < buffered.end(i)) {
+        isTimeBuffered = true;
+        break;
+      }
     }
-  }, []);
+    
+    // Cambia el tiempo de reproducción
+    audio.currentTime = time;
+    setCurrentTime(time);
+    
+    // Si la posición no está descargada y está reproduciendo, fuerza rescarga
+    if (!isTimeBuffered && isPlaying) {
+      // Pausa temporalmente para forzar que el navegador solicite datos con Range
+      audio.pause();
+      // Pequeño delay para asegurar que la solicitud se haga
+      setTimeout(() => {
+        audio.play().catch(err => console.error('Play error after seek:', err));
+      }, 50);
+    }
+  }, [isPlaying]);
   
   const setVolume = useCallback((newVolume: number) => {
     setVolumeState(newVolume);
@@ -351,7 +377,7 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         
         if (audioRef.current && isPlaying) {
           audioRef.current.src = nextSong.audioUrl;
-          audioRef.current.load();
+          audioRef.current.currentTime = 0;
           audioRef.current.play();
         }
       }
@@ -374,7 +400,7 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     
     if (audioRef.current) {
       audioRef.current.src = song.audioUrl;
-      audioRef.current.load();
+      audioRef.current.currentTime = 0;
       audioRef.current.play().catch(err => console.error('Play error:', err));
     }
   }, [queue]);
@@ -459,7 +485,11 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   return (
     <MusicContext.Provider value={value}>
       {children}
-      <audio ref={audioRef} />
+      <audio 
+        ref={audioRef} 
+        preload="metadata"
+        crossOrigin="anonymous"
+      />
     </MusicContext.Provider>
   );
 };
