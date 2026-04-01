@@ -89,54 +89,55 @@ export const Playlists: React.FC = () => {
   };
   
   return (
-    <div className="p-6 pb-32">
-      <div className="flex items-center justify-between mb-8">
+    <div className="p-3 md:p-6 pb-32 md:pb-32">
+      <div className="flex items-center justify-between mb-6 md:mb-8">
         <div>
-          <h1 className="text-4xl font-bold mb-2">Playlists</h1>
-          <p className="text-gray-400">{playlists.length} playlists</p>
+          <h1 className="text-2xl md:text-4xl font-bold mb-1 md:mb-2">Playlists</h1>
+          <p className="text-sm md:text-base text-gray-400">{playlists.length} playlists</p>
         </div>
         <button
           onClick={() => setShowCreateDialog(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-full 
+          className="flex items-center gap-1 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 text-sm md:text-base bg-white text-black rounded-full 
                    hover:scale-105 transition-transform"
         >
-          <Plus size={20} />
-          Create Playlist
+          <Plus size={18} className="md:w-5 md:h-5" />
+          <span className="hidden sm:inline">Create Playlist</span>
+          <span className="sm:hidden">Create</span>
         </button>
       </div>
       
       {/* Create Playlist Dialog */}
       {showCreateDialog && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
              onClick={() => setShowCreateDialog(false)}>
-          <div className="bg-gray-900 rounded-lg p-6 w-full max-w-md"
+          <div className="bg-gray-900 rounded-lg p-4 md:p-6 w-full max-w-md"
                onClick={(e) => e.stopPropagation()}>
-            <h2 className="text-2xl font-bold mb-4">Create New Playlist</h2>
+            <h2 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Create New Playlist</h2>
             <input
               type="text"
               placeholder="Playlist name"
               value={newPlaylistName}
               onChange={(e) => setNewPlaylistName(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-800 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-white"
+              className="w-full px-3 md:px-4 py-2 text-sm md:text-base bg-gray-800 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-white"
               autoFocus
             />
             <textarea
               placeholder="Description (optional)"
               value={newPlaylistDesc}
               onChange={(e) => setNewPlaylistDesc(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-800 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-white resize-none"
+              className="w-full px-3 md:px-4 py-2 text-sm md:text-base bg-gray-800 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-white resize-none"
               rows={3}
             />
             <div className="flex gap-3">
               <button
                 onClick={() => setShowCreateDialog(false)}
-                className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
+                className="flex-1 px-3 md:px-4 py-2 text-sm md:text-base bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleCreatePlaylist}
-                className="flex-1 px-4 py-2 bg-white text-black hover:bg-gray-200 rounded-lg transition-colors"
+                className="flex-1 px-3 md:px-4 py-2 text-sm md:text-base bg-white text-black hover:bg-gray-200 rounded-lg transition-colors"
                 disabled={!newPlaylistName.trim()}
               >
                 Create
@@ -148,35 +149,35 @@ export const Playlists: React.FC = () => {
       
       {/* Edit Playlist Dialog */}
       {editingPlaylist && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
              onClick={() => setEditingPlaylist(null)}>
-          <div className="bg-gray-900 rounded-lg p-6 w-full max-w-md"
+          <div className="bg-gray-900 rounded-lg p-4 md:p-6 w-full max-w-md"
                onClick={(e) => e.stopPropagation()}>
-            <h2 className="text-2xl font-bold mb-4">Edit Playlist</h2>
+            <h2 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Edit Playlist</h2>
             <input
               type="text"
               placeholder="Playlist name"
               value={editName}
               onChange={(e) => setEditName(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-800 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-white"
+              className="w-full px-3 md:px-4 py-2 text-sm md:text-base bg-gray-800 rounded-lg mb-3 focus:outline-none focus:ring-2 focus:ring-white"
             />
             <textarea
               placeholder="Description (optional)"
               value={editDesc}
               onChange={(e) => setEditDesc(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-800 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-white resize-none"
+              className="w-full px-3 md:px-4 py-2 text-sm md:text-base bg-gray-800 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-white resize-none"
               rows={3}
             />
             <div className="flex gap-3">
               <button
                 onClick={() => setEditingPlaylist(null)}
-                className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
+                className="flex-1 px-3 md:px-4 py-2 text-sm md:text-base bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={saveEditPlaylist}
-                className="flex-1 px-4 py-2 bg-white text-black hover:bg-gray-200 rounded-lg transition-colors"
+                className="flex-1 px-3 md:px-4 py-2 text-sm md:text-base bg-white text-black hover:bg-gray-200 rounded-lg transition-colors"
               >
                 Save
               </button>
@@ -186,17 +187,17 @@ export const Playlists: React.FC = () => {
       )}
       
       {/* Playlists Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
         {playlists.map(playlist => {
           const playlistSongs = getPlaylistSongs(playlist.id);
           
           return (
             <div
               key={playlist.id}
-              className="bg-gray-800 rounded-lg p-4 hover:bg-gray-700 transition-colors group"
+              className="bg-gray-800 rounded-lg p-3 md:p-4 hover:bg-gray-700 transition-colors group"
             >
               <div
-                className="relative mb-4 cursor-pointer"
+                className="relative mb-3 md:mb-4 cursor-pointer"
                 onClick={() => setSelectedPlaylist(selectedPlaylist === playlist.id ? null : playlist.id)}
               >
                 {playlistSongs.length > 0 ? (
@@ -211,13 +212,13 @@ export const Playlists: React.FC = () => {
                     ))}
                     {playlistSongs.length < 4 && Array.from({ length: 4 - playlistSongs.length }).map((_, idx) => (
                       <div key={`empty-${idx}`} className="w-full h-full bg-gray-900 flex items-center justify-center">
-                        <Music size={24} className="text-gray-700" />
+                        <Music size={20} className="md:w-6 md:h-6 text-gray-700" />
                       </div>
                     ))}
                   </div>
                 ) : (
                   <div className="aspect-square bg-gray-900 rounded-md flex items-center justify-center">
-                    <Music size={48} className="text-gray-700" />
+                    <Music size={36} className="md:w-12 md:h-12 text-gray-700" />
                   </div>
                 )}
                 
@@ -227,70 +228,70 @@ export const Playlists: React.FC = () => {
                       e.stopPropagation();
                       handlePlayPlaylist(playlist.id);
                     }}
-                    className="absolute bottom-2 right-2 w-12 h-12 bg-green-500 rounded-full 
-                             flex items-center justify-center opacity-0 group-hover:opacity-100 
-                             transform translate-y-2 group-hover:translate-y-0 transition-all
+                    className="absolute bottom-2 right-2 w-10 h-10 md:w-12 md:h-12 bg-green-500 rounded-full 
+                             flex items-center justify-center opacity-100 md:opacity-0 group-hover:opacity-100 
+                             transform translate-y-0 md:translate-y-2 group-hover:translate-y-0 transition-all
                              hover:scale-105 shadow-lg"
                   >
-                    <Play size={24} fill="white" className="text-white ml-0.5" />
+                    <Play size={20} className="md:w-6 md:h-6" fill="white" />
                   </button>
                 )}
               </div>
               
-              <h3 className="font-semibold truncate mb-1">{playlist.name}</h3>
-              <p className="text-sm text-gray-400 truncate mb-2">{playlist.description}</p>
+              <h3 className="font-semibold truncate mb-0.5 md:mb-1 text-sm md:text-base">{playlist.name}</h3>
+              <p className="text-xs md:text-sm text-gray-400 truncate mb-1 md:mb-2">{playlist.description}</p>
               <p className="text-xs text-gray-500">{playlistSongs.length} songs</p>
               
-              <div className="flex gap-2 mt-3">
+              <div className="flex gap-2 mt-2 md:mt-3">
                 <button
                   onClick={() => startEditPlaylist(playlist.id)}
-                  className="flex-1 px-3 py-1.5 bg-gray-900 hover:bg-gray-800 rounded-md 
-                           flex items-center justify-center gap-2 text-sm transition-colors"
+                  className="flex-1 px-2 md:px-3 py-1 md:py-1.5 bg-gray-900 hover:bg-gray-800 rounded-md 
+                           flex items-center justify-center gap-1 md:gap-2 text-xs md:text-sm transition-colors"
                 >
-                  <Edit2 size={14} />
+                  <Edit2 size={12} className="md:w-3.5 md:h-3.5" />
                   Edit
                 </button>
                 <button
                   onClick={() => handleDeletePlaylist(playlist.id)}
-                  className="flex-1 px-3 py-1.5 bg-red-900/30 hover:bg-red-900/50 rounded-md 
-                           flex items-center justify-center gap-2 text-sm transition-colors text-red-400"
+                  className="flex-1 px-2 md:px-3 py-1 md:py-1.5 bg-red-900/30 hover:bg-red-900/50 rounded-md 
+                           flex items-center justify-center gap-1 md:gap-2 text-xs md:text-sm transition-colors text-red-400"
                 >
-                  <Trash2 size={14} />
+                  <Trash2 size={12} className="md:w-3.5 md:h-3.5" />
                   Delete
                 </button>
               </div>
               
               {/* Expanded Song List */}
               {selectedPlaylist === playlist.id && playlistSongs.length > 0 && (
-                <div className="mt-4 pt-4 border-t border-gray-700">
-                  <h4 className="text-sm font-semibold mb-2">Songs</h4>
+                <div className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-gray-700">
+                  <h4 className="text-xs md:text-sm font-semibold mb-2">Songs</h4>
                   <div className="space-y-1">
                     {playlistSongs.map((song, idx) => (
                       <div
                         key={song!.id}
-                        className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded group/song"
+                        className="flex items-center gap-2 p-1.5 md:p-2 hover:bg-gray-800 rounded group/song"
                       >
-                        <span className="text-xs text-gray-500 w-4">{idx + 1}</span>
+                        <span className="text-xs text-gray-500 w-3 md:w-4">{idx + 1}</span>
                         <img
                           src={song!.coverUrl}
                           alt={song!.title}
-                          className="w-8 h-8 rounded object-cover"
+                          className="w-7 h-7 md:w-8 md:h-8 rounded object-cover"
                         />
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm truncate">{song!.title}</p>
+                          <p className="text-xs md:text-sm truncate">{song!.title}</p>
                           <p className="text-xs text-gray-400 truncate">{song!.artist}</p>
                         </div>
                         <button
                           onClick={() => playSong(song!, playlistSongs as any)}
                           className="opacity-0 group-hover/song:opacity-100 p-1 hover:bg-gray-700 rounded"
                         >
-                          <Play size={14} fill="currentColor" />
+                          <Play size={12} className="md:w-3.5 md:h-3.5" fill="currentColor" />
                         </button>
                         <button
                           onClick={() => handleRemoveSong(playlist.id, song!.id)}
                           className="opacity-0 group-hover/song:opacity-100 p-1 hover:bg-gray-700 rounded text-red-400"
                         >
-                          <Trash2 size={14} />
+                          <Trash2 size={12} className="md:w-3.5 md:h-3.5" />
                         </button>
                       </div>
                     ))}
