@@ -12,6 +12,7 @@ interface MusicContextType {
   // Audio State
   currentSong: Song | null;
   isPlaying: boolean;
+  isLoading: boolean;
   currentTime: number;
   duration: number;
   volume: number;
@@ -90,6 +91,7 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   });
   
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolumeState] = useState<number>(() => {
@@ -144,14 +146,21 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
     const handleDurationChange = () => setDuration(audio.duration);
     const handleEnded = () => handleSongEnd();
-    const handlePlay = () => setIsPlaying(true);
+    const handlePlay = () => {
+      setIsPlaying(true);
+      setIsLoading(false);
+    };
     const handlePause = () => setIsPlaying(false);
+    const handleCanPlay = () => setIsLoading(false);
+    const handleLoadStart = () => setIsLoading(true);
     
     audio.addEventListener('timeupdate', handleTimeUpdate);
     audio.addEventListener('durationchange', handleDurationChange);
     audio.addEventListener('ended', handleEnded);
     audio.addEventListener('play', handlePlay);
     audio.addEventListener('pause', handlePause);
+    audio.addEventListener('canplay', handleCanPlay);
+    audio.addEventListener('loadstart', handleLoadStart);
     
     return () => {
       audio.removeEventListener('timeupdate', handleTimeUpdate);
@@ -159,6 +168,8 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       audio.removeEventListener('ended', handleEnded);
       audio.removeEventListener('play', handlePlay);
       audio.removeEventListener('pause', handlePause);
+      audio.removeEventListener('canplay', handleCanPlay);
+      audio.removeEventListener('loadstart', handleLoadStart);
     };
   }, [repeatMode, currentQueueIndex, queue]);
   
@@ -452,6 +463,7 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const value: MusicContextType = {
     currentSong,
     isPlaying,
+    isLoading,
     currentTime,
     duration,
     volume,

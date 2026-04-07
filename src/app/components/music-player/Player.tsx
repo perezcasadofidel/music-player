@@ -3,7 +3,7 @@ import { useMusicContext } from '../../contexts/MusicContext';
 import { PlaybackControls } from './PlaybackControls';
 import { SeekBar } from './SeekBar';
 import { VolumeControl } from './VolumeControl';
-import { ListMusic } from 'lucide-react';
+import { ListMusic, Loader } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
 export const Player: React.FC = () => {

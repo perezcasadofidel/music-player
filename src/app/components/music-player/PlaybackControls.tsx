@@ -1,10 +1,11 @@
 import React from 'react';
-import { Play, Pause, SkipBack, SkipForward, Shuffle, Repeat, Repeat1 } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, Shuffle, Repeat, Repeat1, Loader } from 'lucide-react';
 import { useMusicContext } from '../../contexts/MusicContext';
 
 export const PlaybackControls: React.FC = () => {
   const {
     isPlaying,
+    isLoading,
     isShuffle,
     repeatMode,
     togglePlay,
@@ -41,11 +42,17 @@ export const PlaybackControls: React.FC = () => {
       {/* Play/Pause */}
       <button
         onClick={togglePlay}
-        disabled={!currentSong}
+        disabled={!currentSong || isLoading}
         className="p-2 md:p-3 rounded-full bg-white text-black hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
-        title={isPlaying ? 'Pause' : 'Play'}
+        title={isLoading ? 'Loading...' : isPlaying ? 'Pause' : 'Play'}
       >
-        {isPlaying ? <Pause size={20} className="md:w-6 md:h-6" fill="currentColor" /> : <Play size={20} className="md:w-6 md:h-6" fill="currentColor" />}
+        {isLoading ? (
+          <Loader size={20} className="md:w-6 md:h-6 animate-spin" />
+        ) : isPlaying ? (
+          <Pause size={20} className="md:w-6 md:h-6" fill="currentColor" />
+        ) : (
+          <Play size={20} className="md:w-6 md:h-6" fill="currentColor" />
+        )}
       </button>
       
       {/* Next */}
