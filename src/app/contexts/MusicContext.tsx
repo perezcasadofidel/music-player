@@ -67,6 +67,8 @@ export const useMusicContext = () => {
 
 export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const loadTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const loadStartTimeRef = useRef<number>(0);
   
   // Load state from localStorage
   const [songs] = useState<Song[]>(mockSongs);
@@ -151,8 +153,29 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       setIsLoading(false);
     };
     const handlePause = () => setIsPlaying(false);
-    const handleCanPlay = () => setIsLoading(false);
-    const handleLoadStart = () => setIsLoading(true);
+    const handleCanPlay = () => {
+      // Ensure minimum visibility time of 400ms for the spinner
+      const elapsedTime = Date.now() - loadStartTimeRef.current;
+      const minimumLoadTime = 400;
+      
+      if (elapsedTime < minimumLoadTime) {
+        const remainingTime = minimumLoadTime - elapsedTime;
+        loadTimeoutRef.current = setTimeout(
+          () => setIsLoading(false),
+          remainingTime
+        );
+      } else {
+        setIsLoading(false);
+      }
+    };
+    const handleLoadStart = () => {
+      loadStartTimeRef.current = Date.now();
+      if (loadTimeoutRef.current) {
+        clearTimeout(loadTimeoutRef.current);
+        loadTimeoutRef.current = null;
+      }
+      setIsLoading(true);
+    };
     
     audio.addEventListener('timeupdate', handleTimeUpdate);
     audio.addEventListener('durationchange', handleDurationChange);
@@ -170,6 +193,10 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       audio.removeEventListener('pause', handlePause);
       audio.removeEventListener('canplay', handleCanPlay);
       audio.removeEventListener('loadstart', handleLoadStart);
+      
+      if (loadTimeoutRef.current) {
+        clearTimeout(loadTimeoutRef.current);
+      }
     };
   }, [repeatMode, currentQueueIndex, queue]);
   
@@ -185,6 +212,12 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   
   // Play song and optionally set queue
   const playSong = useCallback((song: Song, queueSource?: Song[]) => {
+    // Clear any pending load timeout
+    if (loadTimeoutRef.current) {
+      clearTimeout(loadTimeoutRef.current);
+      loadTimeoutRef.current = null;
+    }
+    
     setCurrentSong(song);
     
     if (queueSource) {
@@ -254,6 +287,12 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const playNextTrack = useCallback(() => {
     if (queue.length === 0) return;
     
+    // Clear any pending load timeout
+    if (loadTimeoutRef.current) {
+      clearTimeout(loadTimeoutRef.current);
+      loadTimeoutRef.current = null;
+    }
+    
     let nextIndex: number;
     
     if (isShuffle) {
@@ -284,6 +323,12 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (currentTime > 3) {
       seekTo(0);
       return;
+    }
+    
+    // Clear any pending load timeout
+    if (loadTimeoutRef.current) {
+      clearTimeout(loadTimeoutRef.current);
+      loadTimeoutRef.current = null;
     }
     
     let prevIndex: number;
